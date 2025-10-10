@@ -7,7 +7,6 @@
     <link rel="icon" href="JSALI.png">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* ... (Your CSS styles unchanged) ... */
         :root {
             --bg: #0a0a0a;
             --accent: #919191;
@@ -95,7 +94,8 @@
             text-decoration: underline;
         }
 
-        .g-recaptcha {
+        /* Turnstile styling */
+        .cf-turnstile {
             margin-top: 1rem;
             display: flex;
             justify-content: center;
@@ -123,7 +123,6 @@
             opacity: 1;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 600px) {
             .login-box {
                 padding: 1.5rem;
@@ -136,7 +135,8 @@
     </style>
 </head>
 <body>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Cloudflare Turnstile script -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <div class="login-box">
         <h2>Connexion à jsali_lvrgt</h2>
@@ -147,7 +147,8 @@
             <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password" required>
 
-            <div class="g-recaptcha" data-sitekey="6LeE9s0rAAAAAMjjjJG2weTGHGn65pEcqFCp57zV"></div>
+            <!-- Cloudflare Turnstile widget -->
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAB5t-g-mfliUjsH3"></div>
 
             <button type="submit">C'est parti! →</button>
         </form>
@@ -161,9 +162,7 @@
 
         // Supabase configuration
         const SUPABASE_URL = 'https://mqsebxyhynaroemoupwy.supabase.co';
-        // 🚨 IMPORTANT: You MUST use your Supabase Anon Public Key here.
-        // The browser cannot access process.env variables.
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xc2VieHloeW5hcm9lbW91cHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDM0NzgsImV4cCI6MjA3NDQ3OTQ3OH0.ieD61m0CwOt7I2EA8Dstkd5Xd3RgOMQEFs5zpvB9hTU'; 
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xc2VieHloeW5hcm9lbW91cHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDM0NzgsImV4cCI6MjA3NDQ3OTQ3OH0.ieD61m0CwOt7I2EA8Dstkd5Xd3RgOMQEFs5zpvB9hTU';
 
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -182,14 +181,17 @@
 
                     const email = document.getElementById("email").value.trim();
                     const password = document.getElementById("password").value.trim();
-                    const recaptchaResponse = grecaptcha.getResponse();
+
+                    // Get Turnstile response token
+                    const turnstileResponse = document.querySelector('.cf-turnstile-response');
+                    const turnstileToken = turnstileResponse ? turnstileResponse.value : '';
 
                     if (email === "" || password === "") {
                         showToast("Veuillez remplir tous les champs.");
                         return;
                     }
-                    if (recaptchaResponse.length === 0) {
-                        showToast("Veuillez compléter le reCAPTCHA.");
+                    if (!turnstileToken) {
+                        showToast("Veuillez compléter le CAPTCHA de Cloudflare.");
                         return;
                     }
 
@@ -205,14 +207,12 @@
                         }
 
                         const user = data.user;
-                        
                         if (!user) {
                             showToast("Une erreur inattendue est survenue.");
-                            grecaptcha.reset();
+                            turnstile.reset(); // Reset Turnstile widget
                             return;
                         }
 
-                        // Get the username from user_metadata (set during registration) or fallback to email part
                         const username = user.user_metadata?.full_name || email.split("@")[0];
                         localStorage.setItem("jsaliUser", username);
 
@@ -223,7 +223,7 @@
                         }, 1500);
 
                     } catch (error) {
-                        grecaptcha.reset();
+                        turnstile.reset(); // Reset Turnstile widget
 
                         let errorMessage = "Échec de la connexion. Veuillez vérifier votre email et mot de passe.";
                         if (error.message.includes('Invalid login credentials') || error.message.includes('Email not confirmed')) {
@@ -235,6 +235,11 @@
                 });
             }
         });
+
+        // Optional: Helper to reset Turnstile programmatically
+        window.turnstileReset = () => {
+            turnstile.reset();
+        };
     </script>
 </body>
 </html>
