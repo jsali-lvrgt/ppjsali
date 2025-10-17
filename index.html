@@ -179,6 +179,9 @@
             transition: color 0.3s, transform 0.3s;
             font-size: 1rem;
             animation: fadeIn 1s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .nav-links a:hover {
@@ -196,6 +199,9 @@
             transition: background 0.3s, transform 0.2s;
             cursor: pointer;
             animation: fadeIn 1s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .btn:hover {
@@ -343,6 +349,15 @@
             transition: all 0.6s ease;
             text-align: center;
             transform-style: preserve-3d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--highlight);
         }
 
         .feature.visible {
@@ -573,6 +588,15 @@
     </div>
 
     <!-- PARALLAX LAYERS -->
+    <div class="parallax-layer parallax-layer-1">
+        <img src="jsali_lvrgt.png" alt="Parallax 1" />
+    </div>
+    <div class="parallax-layer parallax-layer-2">
+        <img src="fstgat%20jsail.png" alt="Parallax 2" />
+    </div>
+    <div class="parallax-layer parallax-layer-3">
+        <img src="jsail%20usthb.jpeg" alt="Parallax 3" />
+    </div>
 
     <div id="mainContent" class="main-content hidden">
         <nav>
@@ -583,19 +607,17 @@
                 <span></span>
             </div>
             <div class="nav-links" id="nav-links">
-                <a href="axe thematique">Axes Thématiques</a>
-                <a href="/error-catcher/404page.html">Sponsors</a>
-                <a href="/inscriptions/">Inscription à la participation</a>
+                <a href="axe thematique"><i class='bx bx-book'></i> Axes Thématiques</a>
+                <a href="/error-catcher/404page.html"><i class='bx bx-heart'></i> Sponsors</a>
+                <a href="/inscriptions/"><i class='bx bx-user-plus'></i> Inscription à la participation</a>
                 <div class="profile-section" style="display:none" id="profile-section">
                     <div id="profile-pic-container">
-                        <input type="file" id="profile-pic-input" accept="image/*">
                         <img src="placeholder-profile-pic.png" alt="Profile" id="profile-pic" />
                     </div>
                     <span id="welcome-nav-msg"></span>
                 </div>
-                <a href="auth" class="btn" id="register-btn">Authentification</a>
-             
-                <button type="button" class="btn" id="logout-btn" style="display:none">Déconnexion</button>
+                <a href="auth" class="btn" id="register-btn"><i class='bx bx-user'></i>Authentification</a>
+                <button type="button" class="btn" id="logout-btn" style="display:none"><i class='bx bx-log-out'></i> Déconnexion</button>
             </div>
         </nav>
 
@@ -614,19 +636,29 @@
 
             <section class="features" id="axes">
                 <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
+                    <i class='bx bx-building-house'></i>
                     <h3>Axe 1:<br>Infrastructures linéaires & développement rural</h3>
+                    <p>Cliquez pour plus d'information.</p>
                 </a>
                 <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
+                    <i class='bx bx-bulb'></i>
                     <h3>Axe 2:<br>Technologies & innovations pour un aménagement intelligent</h3>
+                    <p>Cliquez pour plus d'information.</p>
                 </a>
                 <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
+                    <i class='bx bx-group'></i>
                     <h3>Axe 3:<br>Gouvernance & participation locale</h3>
+                    <p>Cliquez pour plus d'information.</p>
                 </a>
                 <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
+                    <i class='bx bx-leaf'></i>
                     <h3>Axe 4:<br>Développement durable & biodiversité</h3>
+                    <p>Cliquez pour plus d'information.</p>
                 </a>
                 <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
+                    <i class='bx bx-shield'></i>
                     <h3>Axe 5:<br>Résilience & adaptation climatique</h3>
+                    <p>Cliquez pour plus d'information.</p>
                 </a>
             </section>
 
@@ -702,7 +734,7 @@
             VanillaTilt.init(document.querySelectorAll(".logos img, .feature"), {
                 max: 10,
                 speed: 400,
-                prospective: 1000,
+                perspective: 1000,
                 glare: true,
                 "max-glare": 0.3
             });
