@@ -21,17 +21,22 @@
       font-family: "Poppins", sans-serif;
     }
 
+    /* Animated Gradient Background */
     body {
-      background-image: url("https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsb2ZmaWNlMjBfM2RfbW9kZXJuX3dhdmVfY3VydmVfYWJzdHJhY3RfaGFsZnRvbmVfZ3JhZGllbl8xZTJhY2M3Mi1jZTU3LTQ0NjItOGQzNS1lOTI4YzI5NzcxMTdfMS5qcGc.jpg");
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+      background: linear-gradient(300deg, #002fa7, #ea3909);
+      background-size: 120% 120%;
+      animation: gradient-animation 12s ease infinite;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
+    }
+
+    @keyframes gradient-animation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .wrapper {
@@ -40,7 +45,6 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background-color: rgba(0, 0, 0, 0.2);
     }
 
     .login_box {
@@ -403,6 +407,9 @@
             <input type="checkbox" id="remember" style="margin-right: 6px; accent-color: var(--primary-color);" />
             <label for="remember">Se souvenir de moi</label>
           </div>
+          <div class="forgot">
+            <a href="#" id="forgotLink">Mot de passe oublié ?</a>
+          </div>
         </div>
 
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAB5t-g-mfliUjsH3"></div>
@@ -418,6 +425,20 @@
     </div>
   </div>
 
+  <!-- Forgot Password Modal -->
+  <div id="forgotModal" class="modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
+    <div style="background:rgba(30,30,30,0.9); color:white; padding:2rem; border-radius:1rem; width:90%; max-width:400px; border:2px solid var(--primary-color);">
+      <h3 style="margin-top:0; color:var(--primary-color); font-weight:800;">Réinitialiser le mot de passe</h3>
+      <p style="margin-bottom:1.2rem; color:#ccc; font-size:0.95rem;">
+        Entrez votre adresse e-mail.
+      </p>
+      <input type="email" id="resetEmail" placeholder="votre@email.com" style="width:100%; padding:0.8rem; border:2px solid var(--primary-color); border-radius:0.5rem; background:transparent; color:white; margin-bottom:1rem;" />
+      <div style="display:flex; gap:0.6rem;">
+        <button id="sendResetBtn" style="flex:1; background:var(--second-color); color:var(--black-color); border:none; border-radius:0.5rem; font-weight:800; padding:0.6rem;">Envoyer</button>
+        <button id="cancelResetBtn" style="flex:1; background:transparent; color:white; border:2px solid white; border-radius:0.5rem; padding:0.6rem;">Annuler</button>
+      </div>
+    </div>
+  </div>
 
   <div class="toast" id="toast"></div>
 
@@ -449,7 +470,7 @@
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: 'https://jsali-lvrgt.github.io/'// 👈 Update this
+            redirectTo: 'http://127.0.0.1:5500/login.html' // 👈 UPDATE TO YOUR URL
           }
         });
         if (error) throw error;
@@ -503,7 +524,7 @@
 
       try {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: 'https://yourdomain.com/reset-password.html' // 👈 Must match your reset page URL
+          redirectTo: 'http://127.0.0.1:5500/reset-password.html' // 👈 UPDATE TO YOUR URL
         });
         if (error) throw error;
 
