@@ -4,17 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>404 - Page Non Trouvée</title>
+    <meta name="description" content="jsali_lvrgt | Page non trouvée. Retournez à l'accueil pour explorer la Journée Scientifique JSALI." />
     <link rel="icon" href="/JSALI.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <style>
         :root {
-            --main-bg: #0a0a0a;
-            --highlight: #919191;
-            --accent: #919191;
-            --primary-text: #fff;
-            --secondary-text: #cbd5e1;
-            --blur: rgba(255, 255, 255, 0.05);
+            --main-bg: #e2e2e2;
+            --highlight: #616161;
+            --accent: #c9d6ff;
+            --primary-text: #333;
+            --secondary-text: #888;
+            --blur: rgba(0, 0, 0, 0.1);
             --nav-height: 70px;
+            --btn-bg: #888;
+            --btn-hover: #777;
         }
 
         * {
@@ -22,11 +27,13 @@
             padding: 0;
             box-sizing: border-box;
             scroll-behavior: smooth;
+            font-family: "Poppins", sans-serif;
+            text-decoration: none;
+            list-style: none;
         }
 
         body {
-            font-family: "Space Grotesk", sans-serif;
-            background: var(--main-bg);
+            background: linear-gradient(90deg, var(--main-bg), var(--accent));
             color: var(--primary-text);
             min-height: 100vh;
             display: flex;
@@ -34,14 +41,14 @@
             overflow-x: hidden;
         }
 
-        /* --- LOADER (optionnel mais cohérent) --- */
+        /* --- LOADER --- */
         .loader-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--main-bg);
+            background: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -95,9 +102,9 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(10, 10, 10, 0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             padding: 0 2rem;
             z-index: 1000;
             display: flex;
@@ -109,6 +116,8 @@
         nav h1 {
             font-size: 1.3rem;
             color: var(--highlight);
+            font-weight: 800;
+            animation: fadeIn 1s ease-out;
         }
 
         .hamburger {
@@ -135,31 +144,39 @@
         }
 
         .nav-links a {
-            color: var(--secondary-text);
+            color: var(--primary-text);
             text-decoration: none;
             font-weight: 600;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
             font-size: 1rem;
+            animation: fadeIn 1s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .nav-links a:hover {
             color: var(--highlight);
+            transform: scale(1.1);
         }
 
         .btn {
             padding: 0.5rem 1.2rem;
-            background: var(--highlight);
-            color: var(--main-bg);
+            background: var(--btn-bg);
+            color: #fff;
             border: none;
             border-radius: 8px;
-            font-weight: bold;
+            font-weight: 600;
             transition: background 0.3s, transform 0.2s;
-            text-decoration: none;
             cursor: pointer;
+            animation: fadeIn 1s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .btn:hover {
-            background: #a1a1a1;
+            background: var(--btn-hover);
             transform: translateY(-2px);
         }
 
@@ -167,6 +184,7 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            animation: fadeIn 1s ease-out;
         }
 
         #profile-pic-container {
@@ -213,15 +231,26 @@
             text-align: center;
             padding: 4rem 2rem;
             flex-grow: 1;
-            animation: fadeIn 1s ease forwards;
+            background: #fff;
+            border: 1px solid var(--blur);
+            border-radius: 1.5rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            transition: all 0.6s ease;
+        }
+
+        .not-found-section.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
         .not-found-section h2 {
             font-size: 4rem;
             font-weight: 800;
-            background: linear-gradient(to right, var(--highlight), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--highlight);
             margin-bottom: 1rem;
             animation: popIn 1s ease forwards;
         }
@@ -230,7 +259,7 @@
             font-size: 1.2rem;
             color: var(--secondary-text);
             margin-bottom: 2rem;
-            max-width: 600px;
+            max-width: 500px;
         }
 
         .road-container {
@@ -252,6 +281,12 @@
             border-top: 4px dashed #fff;
             position: absolute;
             bottom: 0;
+            animation: moveDashes 2s linear infinite;
+        }
+
+        @keyframes moveDashes {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
         }
 
         .road-sign {
@@ -277,7 +312,7 @@
             text-align: center;
             font-size: 2rem;
             font-weight: bold;
-            color: var(--main-bg);
+            color: #fff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             line-height: 1;
         }
@@ -286,11 +321,13 @@
             text-align: center;
             padding: 2rem 1rem;
             font-size: 0.9rem;
-            color: #64748b;
+            color: var(--secondary-text);
+            position: relative;
+            z-index: 1;
         }
 
         footer a {
-            color: var(--secondary-text);
+            color: var(--primary-text);
             text-decoration: none;
             transition: color 0.3s;
         }
@@ -299,10 +336,52 @@
             color: var(--highlight);
         }
 
+        /* --- PARALLAX EFFECT --- */
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .parallax-layer img {
+            position: absolute;
+            object-fit: cover;
+            opacity: 0.3;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        .parallax-layer-1 img {
+            width: 200px;
+            top: 10%;
+            left: 10%;
+        }
+
+        .parallax-layer-2 img {
+            width: 150px;
+            top: 50%;
+            right: 15%;
+        }
+
+        .parallax-layer-3 img {
+            width: 180px;
+            bottom: 20%;
+            left: 20%;
+        }
+
         /* --- ANIMATIONS --- */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes popIn {
@@ -321,7 +400,7 @@
                 top: var(--nav-height);
                 left: 0;
                 right: 0;
-                background: rgba(10,10,10,0.97);
+                background: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(10px);
                 flex-direction: column;
                 align-items: flex-start;
@@ -332,7 +411,7 @@
                 visibility: hidden;
                 transition: all 0.4s ease;
                 z-index: 999;
-                border-top: 1px solid rgba(255,255,255,0.1);
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
             }
 
             .nav-links.active {
@@ -345,7 +424,7 @@
                 width: 100%;
                 padding: 0.7rem 0;
                 font-size: 1.1rem;
-                border-bottom: 1px solid rgba(255,255,255,0.05);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             }
 
             .nav-links a:last-child, .nav-links .btn:last-child {
@@ -355,7 +434,7 @@
             .profile-section {
                 width: 100%;
                 padding-top: 1rem;
-                border-top: 1px solid rgba(255,255,255,0.05);
+                border-top: 1px solid rgba(0, 0, 0, 0.05);
             }
 
             #welcome-nav-msg {
@@ -370,6 +449,7 @@
 
             .not-found-section {
                 padding: 3rem 1.5rem;
+                margin: 1.5rem;
             }
 
             .not-found-section h2 {
@@ -388,11 +468,29 @@
             footer {
                 padding: 1.5rem 1rem;
             }
+
+            .parallax-layer-1 img {
+                width: 100px;
+                top: 15%;
+                left: 5%;
+            }
+
+            .parallax-layer-2 img {
+                width: 80px;
+                top: 60%;
+                right: 5%;
+            }
+
+            .parallax-layer-3 img {
+                width: 90px;
+                bottom: 10%;
+                left: 10%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- LOADER OPTIONNEL (supprimez si non désiré) -->
+    <!-- LOADER -->
     <div class="loader-wrapper" id="loaderWrapper">
         <div class="loader-text">Chargement...</div>
         <div class="loader">
@@ -400,21 +498,36 @@
             <div class="dot"></div>
             <div class="dot"></div>
         </div>
+        <p class="loader-footer-text">
+            Site par tarmacq studios<br><br>
+            <a href="https://x.com/jsali_lvrgt" target="_blank" rel="noopener noreferrer">Tweetez Nous</a> | 
+            <a href="https://jsalilvrgt.statuspage.io" target="_blank" rel="noopener noreferrer">Stats de nos Services</a>
+        </p>
     </div>
 
-    <div id="mainContent" class="main-content">
+    <!-- PARALLAX LAYERS -->
+    <div class="parallax-layer parallax-layer-1">
+        <img src="jsali_lvrgt.png" alt="Parallax 1" />
+    </div>
+    <div class="parallax-layer parallax-layer-2">
+        <img src="fstgat%20jsail.png" alt="Parallax 2" />
+    </div>
+    <div class="parallax-layer parallax-layer-3">
+        <img src="jsail%20usthb.jpeg" alt="Parallax 3" />
+    </div>
+
+    <div id="mainContent" class="main-content hidden">
         <nav>
-            <h1>jsali_lvrgt</h1>
+            <h1><strong>jsali_lvrgt</strong></h1>
             <div class="hamburger" id="hamburger" aria-label="Menu de navigation">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
             <div class="nav-links" id="nav-links">
-                <a href="/index.html">Accueil</a>
-                <a href="/axe thematique.html">Axes Thématiques</a>
-                <a href="/inscriptions/">Inscription</a>
-
+                <a href="/index.html"><i class='bx bx-home'></i> Accueil</a>
+                <a href="/axe thematique.html"><i class='bx bx-book'></i> Axes Thématiques</a>
+                <a href="/inscriptions/"><i class='bx bx-user-plus'></i> Inscription</a>
                 <div class="profile-section" style="display:none" id="profile-section">
                     <div id="profile-pic-container">
                         <input type="file" id="profile-pic-input" accept="image/*">
@@ -422,14 +535,12 @@
                     </div>
                     <span id="welcome-nav-msg"></span>
                 </div>
-
-                <a href="/register.html" class="btn" id="register-btn">S'inscrire</a>
-                <a href="/login.html" class="btn" id="login-btn">Se connecter</a>
-                <button type="button" class="btn" id="logout-btn" style="display:none">Déconnexion</button>
+                <a href="/auth" class="btn" id="register-btn"><i class='bx bx-user'></i> Authentification</a>
+                <button type="button" class="btn" id="logout-btn" style="display:none"><i class='bx bx-log-out'></i> Déconnexion</button>
             </div>
         </nav>
 
-        <section class="not-found-section">
+        <section class="not-found-section" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
             <h2>404 - Page non trouvée</h2>
             <p>Oops ! On dirait que vous êtes perdu. La page que vous cherchez n'existe pas.</p>
             <div class="road-container">
@@ -439,12 +550,12 @@
                 </div>
                 <div class="road"></div>
             </div>
-            <a href="/index.html" class="btn" style="margin-top: 2rem;">Retour à l'accueil</a>
+            <a href="/index.html" class="btn" style="margin-top: 2rem;"><i class='bx bx-home'></i> Retour à l'accueil</a>
         </section>
 
         <footer>
-            &copy; 2025 JSALI — USTHB | FSTGAT | <a href="mailto:gatanalysel1@gmail.com">Nous Contacter</a><br />
-            <a href="mailto:ryanyagouni@gmail.com">Contacter le développeur</a>
+            &copy; 2025 jsali_lvrgt | FSTGAT | USTHB | <a href="mailto:jsalifstgat@gmail.com">Nous Contacter</a><br />
+            <a href="mailto:ryanyagouni@yahoo.com">Contacter le développeur</a>
         </footer>
     </div>
 
@@ -459,21 +570,21 @@
         const PLACEHOLDER_PIC = 'placeholder-profile-pic.png';
 
         document.addEventListener("DOMContentLoaded", async () => {
-            // === LOADER (optionnel) ===
+            // Loader
             const loaderWrapper = document.getElementById('loaderWrapper');
-            if (loaderWrapper) {
-                setTimeout(() => {
-                    loaderWrapper.classList.add('hidden');
-                }, 1000);
-            }
+            const mainContent = document.getElementById('mainContent');
+            setTimeout(() => {
+                loaderWrapper?.classList.add('hidden');
+                setTimeout(() => mainContent?.classList.remove('hidden'), 300);
+            }, 2000);
 
-            // === MOBILE MENU ===
+            // Mobile Menu
             const hamburger = document.getElementById('hamburger');
             const navLinks = document.getElementById('nav-links');
             hamburger?.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
+                const isActive = navLinks.classList.toggle('active');
                 const spans = hamburger.querySelectorAll('span');
-                if (navLinks.classList.contains('active')) {
+                if (isActive) {
                     spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
                     spans[1].style.opacity = '0';
                     spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
@@ -490,7 +601,35 @@
                 });
             });
 
-            // === AUTH UI ===
+            // 404 Section Animation
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.not-found-section').forEach(el => observer.observe(el));
+
+            // Parallax Effect
+            const parallaxLayers = document.querySelectorAll('.parallax-layer img');
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                parallaxLayers.forEach((layer, index) => {
+                    const speed = 0.2 * (index + 1);
+                    const rotation = scrollY * 0.05 * (index + 1);
+                    layer.style.transform = `translateY(${scrollY * speed}px) rotate(${rotation}deg)`;
+                });
+            });
+
+            // Initialize Vanilla Tilt
+            VanillaTilt.init(document.querySelectorAll('.not-found-section'), {
+                max: 8,
+                speed: 400,
+                perspective: 1000,
+                glare: true,
+                "max-glare": 0.3
+            });
+
+            // Auth UI
             const welcomeNavMsg = document.getElementById('welcome-nav-msg');
             const loginBtn = document.getElementById('login-btn');
             const registerBtn = document.getElementById('register-btn');
@@ -504,13 +643,13 @@
                 const cached = localStorage.getItem(`jsali_avatar_${userId}`);
                 if (cached) return profilePic.src = cached;
 
-                const exts = ['jpg','jpeg','png','webp'];
+                const exts = ['jpg', 'jpeg', 'png', 'webp'];
                 for (const ext of exts) {
                     const path = `${userId}/avatar.${ext}`;
                     const { data } = supabase.storage.from(BUCKET_NAME).getPublicUrl(path);
                     if (!data?.publicUrl) continue;
                     try {
-                        const res = await fetch(data.publicUrl, {method:'HEAD'});
+                        const res = await fetch(data.publicUrl, { method: 'HEAD' });
                         if (res.ok) {
                             profilePic.src = data.publicUrl;
                             localStorage.setItem(`jsali_avatar_${userId}`, data.publicUrl);
@@ -529,10 +668,27 @@
                 if (loginBtn) loginBtn.style.display = 'none';
                 if (registerBtn) registerBtn.style.display = 'none';
                 if (logoutBtn) logoutBtn.style.display = 'inline-block';
-                if (profilePic) {
-                    profilePic.onclick = () => profilePicInput?.click();
-                    loadProfilePicture(user.id);
+                if (profilePic && profilePicInput) {
+                    profilePic.onclick = () => profilePicInput.click();
+                    profilePicInput.onchange = async (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const filePath = `${user.id}/avatar.jpg`;
+                            const { error } = await supabase.storage.from(BUCKET_NAME).upload(filePath, file, { upsert: true });
+                            if (!error) {
+                                const { data } = supabase.storage.from(BUCKET_NAME).getPublicUrl(filePath);
+                                if (data?.publicUrl) {
+                                    profilePic.src = data.publicUrl + '?t=' + Date.now();
+                                    localStorage.setItem(`jsali_avatar_${user.id}`, data.publicUrl);
+                                }
+                            }
+                            e.target.value = '';
+                        }
+                    };
+                } else {
+                    console.warn('profilePic or profilePicInput not found in DOM');
                 }
+                loadProfilePicture(user.id);
             }
 
             function showLoggedOut() {
@@ -547,21 +703,32 @@
 
             const { data: { session } } = await supabase.auth.getSession();
             if (session?.user?.email_confirmed_at) {
+                console.log('User is logged in:', session.user);
                 showLoggedIn(session.user);
             } else {
+                console.log('No active session');
                 showLoggedOut();
             }
 
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', async () => {
-                    await supabase.auth.signOut();
-                    showLoggedOut();
-                    if (session?.user) localStorage.removeItem(`jsali_avatar_${session.user.id}`);
-                    window.location.href = "/index.html";
+                    console.log('Logout button clicked');
+                    try {
+                        const { error } = await supabase.auth.signOut();
+                        if (error) throw error;
+                        console.log('Sign-out successful');
+                        showLoggedOut();
+                        if (session?.user) localStorage.removeItem(`jsali_avatar_${session.user.id}`);
+                        window.location.href = "/index.html";
+                    } catch (error) {
+                        console.error('Logout failed:', error.message);
+                        alert('Échec de la déconnexion. Veuillez réessayer.');
+                    }
                 });
             }
 
             supabase.auth.onAuthStateChange((event, session) => {
+                console.log('Auth state changed:', event, session);
                 if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
                     showLoggedIn(session.user);
                 } else if (event === 'SIGNED_OUT') {
