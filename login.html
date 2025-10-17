@@ -1,277 +1,537 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion – jsali_lvrgt</title>
-    <link rel="icon" href="JSALI.png">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0a0a0a;
-            --accent: #919191;
-            --highlight: #919191;
-            --text: #fff;
-            --text-light: #cbd5e1;
-            --input-bg: #1a1a1a;
-            --success: #4ade80;
-            --error: #f87171;
-            --info: #60a5fa;
-        }
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
-            box-sizing: border-box;
-        }
-        .login-box {
-            background: #111;
-            padding: 2.5rem;
-            border-radius: 1rem;
-            width: 100%;
-            max-width: 450px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--accent);
-            text-align: center;
-        }
-        .login-box h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: var(--highlight);
-        }
-        .login-box form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: stretch;
-        }
-        .login-box label {
-            text-align: left;
-            margin-bottom: 0.2rem;
-            color: var(--text-light);
-            font-weight: 600;
-        }
-        .login-box input {
-            padding: 0.8rem;
-            border: 1px solid #333;
-            border-radius: 0.5rem;
-            background: var(--input-bg);
-            color: var(--text);
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        .login-box input:focus {
-            outline: none;
-            border-color: var(--highlight);
-        }
-        .login-box button {
-            background: var(--accent);
-            color: var(--bg);
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
-            margin-top: 1rem;
-        }
-        .login-box button:hover {
-            background: #a9a9a9;
-            transform: translateY(-1px);
-        }
-        .login-box a {
-            color: var(--highlight);
-            text-decoration: none;
-            margin-top: 1.5rem;
-            display: block;
-            font-size: 0.9rem;
-        }
-        .login-box a:hover {
-            text-decoration: underline;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion – jsali_lvrgt</title>
+  <link rel="icon" href="JSALI.png" />
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #c6c3c3;
+      --second-color: #ffffff;
+      --black-color: #000000;
+    }
 
-        .cf-turnstile {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: center;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-        /* ✨ Beautiful Toast Styles */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(20, 20, 20, 0.95);
-            color: white;
-            padding: 1rem 1.4rem;
-            border-radius: 0.8rem;
-            font-size: 1rem;
-            font-weight: 600;
-            max-width: 90%;
-            width: auto;
-            text-align: center;
-            z-index: 1000;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(145, 145, 145, 0.2);
-            backdrop-filter: blur(4px);
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28),
-                        opacity 0.4s ease-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-        }
+    body {
+      background-image: url("https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsb2ZmaWNlMjBfM2RfbW9kZXJuX3dhdmVfY3VydmVfYWJzdHJhY3RfaGFsZnRvbmVfZ3JhZGllbl8xZTJhY2M3Mi1jZTU3LTQ0NjItOGQzNS1lOTI4YzI5NzcxMTdfMS5qcGc.jpg");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
 
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
+    .wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
 
-        .toast.success {
-            border-left: 4px solid var(--success);
-        }
+    .login_box {
+      position: relative;
+      width: 100%;
+      max-width: 450px;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      border-radius: 15px;
+      padding: 7.5em 2.5em 3em 2.5em;
+      color: var(--second-color);
+      box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
 
-        .toast.error {
-            border-left: 4px solid var(--error);
-        }
+    .login-header {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary-color);
+      width: 140px;
+      height: 70px;
+      border-radius: 0 0 20px 20px;
+      z-index: 2;
+    }
 
-        .toast.info {
-            border-left: 4px solid var(--info);
-        }
+    .login-header span {
+      font-size: 30px;
+      color: var(--black-color);
+    }
 
-        @media (max-width: 600px) {
-            .login-box {
-                padding: 1.5rem;
-            }
-            .login-box h2 {
-                font-size: 1.6rem;
-                margin-bottom: 1.5rem;
-            }
-            .toast {
-                padding: 0.9rem 1.2rem;
-                font-size: 0.95rem;
-            }
-        }
-    </style>
+    .login-header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -30px;
+      width: 30px;
+      height: 30px;
+      border-top-right-radius: 50%;
+      background: transparent;
+      box-shadow: 15px 0 0 0 var(--primary-color);
+    }
+
+    .login-header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: -30px;
+      width: 30px;
+      height: 30px;
+      border-top-left-radius: 50%;
+      background: transparent;
+      box-shadow: -15px 0 0 0 var(--primary-color);
+    }
+
+    /* Google Button */
+    .google-button {
+      padding: 10px;
+      font-weight: bold;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+      border-radius: 35px;
+      align-items: center;
+      border: 2px solid var(--black-color);
+      outline: none;
+      background: white;
+      cursor: pointer;
+      margin: 0 auto 25px;
+      max-width: 280px;
+    }
+
+    .google-button .svg {
+      height: 25px;
+      margin-right: 10px;
+    }
+
+    .google-button .text {
+      z-index: 10;
+      font-size: 14px;
+      color: var(--black-color);
+    }
+
+    .google-button:hover .text {
+      animation: text forwards 0.3s;
+    }
+
+    @keyframes text {
+      from { color: var(--black-color); }
+      to { color: white; }
+    }
+
+    .google-button .svg {
+      z-index: 6;
+    }
+
+    .google-button:hover::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 9%;
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 0;
+      opacity: 0;
+      border-radius: 300px;
+      animation: wave1 2.5s ease-in-out forwards;
+    }
+
+    .google-button:hover::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 9%;
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 0;
+      opacity: 0;
+      border-radius: 300px;
+      animation: wave2 2.5s ease-in-out forwards;
+    }
+
+    @keyframes wave1 {
+      0% { z-index: 1; background: #EB4335; width: 0; height: 0; opacity: 1; }
+      25% { z-index: 1; background: #EB4335; width: 800px; height: 800px; opacity: 1; }
+      26% { z-index: 3; background: #34A853; width: 0; height: 0; opacity: 1; }
+      50% { z-index: 3; background: #34A853; width: 800px; height: 800px; opacity: 1; }
+      100% { z-index: 3; background: #34A853; width: 800px; height: 800px; opacity: 1; }
+    }
+
+    @keyframes wave2 {
+      0% { z-index: 2; background: #FBBC05; width: 0; height: 0; opacity: 1; }
+      35% { z-index: 2; background: #FBBC05; width: 800px; height: 800px; opacity: 1; }
+      40% { z-index: 4; background: #4285F4; width: 0; height: 0; opacity: 1; }
+      64% { z-index: 4; background: #4285F4; width: 800px; height: 800px; opacity: 1; }
+      100% { z-index: 4; background: #4285F4; width: 800px; height: 800px; opacity: 1; }
+    }
+
+    .google-button:hover .red { animation: disappear 0.1s forwards; animation-delay: 0.1s; }
+    .google-button:hover .yellow { animation: disappear 0.1s forwards; animation-delay: 0.3s; }
+    .google-button:hover .green { animation: disappear 0.1s forwards; animation-delay: 0.7s; }
+    .google-button:hover .blue { animation: disappear 0.1s forwards; animation-delay: 1.1s; }
+
+    @keyframes disappear {
+      from { filter: brightness(1); }
+      to { filter: brightness(100); }
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: var(--second-color);
+      font-size: 0.9rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .divider span {
+      padding: 0 10px;
+    }
+
+    .input_box {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .input-field {
+      width: 100%;
+      height: 55px;
+      font-size: 16px;
+      background: transparent;
+      color: var(--second-color);
+      padding-inline: 20px 50px;
+      border: 2px solid var(--primary-color);
+      border-radius: 30px;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: var(--second-color);
+    }
+
+    .label {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      color: var(--second-color);
+      font-size: 16px;
+      pointer-events: none;
+      transition: 0.2s;
+    }
+
+    .input-field:focus ~ .label,
+    .input-field:not(:placeholder-shown) ~ .label {
+      top: -10px;
+      left: 20px;
+      font-size: 14px;
+      background: var(--primary-color);
+      color: var(--black-color);
+      padding: 0 8px;
+      border-radius: 20px;
+    }
+
+    .icon {
+      position: absolute;
+      top: 18px;
+      right: 25px;
+      font-size: 20px;
+      color: var(--second-color);
+    }
+
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      font-size: 15px;
+      margin-top: -10px;
+    }
+
+    .remember-forgot label {
+      color: var(--second-color);
+      font-size: 14px;
+    }
+
+    .remember-forgot a {
+      color: var(--second-color);
+      text-decoration: none;
+    }
+
+    .remember-forgot a:hover {
+      text-decoration: underline;
+    }
+
+    .input-submit {
+      width: 100%;
+      height: 50px;
+      background: var(--second-color);
+      color: var(--black-color);
+      font-size: 16px;
+      font-weight: 800;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .input-submit:hover {
+      background: #e0e0e0;
+    }
+
+    .register {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .register a {
+      color: var(--second-color);
+      text-decoration: none;
+    }
+
+    .register a:hover {
+      text-decoration: underline;
+    }
+
+    .cf-turnstile {
+      margin: 20px 0 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(30, 30, 30, 0.9);
+      color: white;
+      padding: 1rem 1.4rem;
+      border-radius: 0.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      max-width: 90%;
+      z-index: 1000;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      border-left: 4px solid #4ade80;
+      opacity: 0;
+      transition: transform 0.4s, opacity 0.4s;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.error {
+      border-left-color: #f87171;
+    }
+
+    @media (max-width: 564px) {
+      .login_box {
+        padding: 7.5em 1.5em 3em 1.5em;
+      }
+    }
+  </style>
 </head>
 <body>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-    <div class="login-box">
-        <h2>Connexion à jsali_lvrgt</h2>
-        <form id="loginForm">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+  <div class="wrapper">
+    <div class="login_box">
+      <div class="login-header">
+        <span>Login</span>
+      </div>
 
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" required>
+      <!-- Google Sign-In -->
+      <button class="google-button" id="googleSignIn">
+        <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262" class="svg">
+          <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" class="blue"></path>
+          <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" class="green"></path>
+          <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" class="yellow"></path>
+          <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" class="red"></path>
+        </svg>
+        <span class="text">Continue with Google</span>
+      </button>
 
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAB5t-g-mfliUjsH3"></div>
+      <div class="divider"><span>ou</span></div>
 
-            <button type="submit">C'est parti! →</button>
-        </form>
-        <a href="register.html">Pas encore inscrit ? Créer un compte</a>
+      <form id="loginForm">
+        <div class="input_box">
+          <input type="email" id="email" class="input-field" required placeholder=" ">
+          <label for="email" class="label">E-mail</label>
+          <i class="bx bx-envelope icon"></i>
+        </div>
+
+        <div class="input_box">
+          <input type="password" id="password" class="input-field" required placeholder=" ">
+          <label for="password" class="label">Mot de passe</label>
+          <i class="bx bx-lock-alt icon"></i>
+        </div>
+
+        <div class="remember-forgot">
+          <div class="remember-me">
+            <input type="checkbox" id="remember" style="margin-right: 6px; accent-color: var(--primary-color);" />
+            <label for="remember">Se souvenir de moi</label>
+          </div>
+          <div class="forgot">
+            <a href="#" id="forgotLink">Mot de passe oublié ?</a>
+          </div>
+        </div>
+
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAB5t-g-mfliUjsH3"></div>
+
+        <div class="input_box">
+          <input type="submit" class="input-submit" value="Login" />
+        </div>
+
+        <div class="register">
+          <span>Pas de compte ? <a href="register.html">Créer un compte</a></span>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <div class="toast" id="toast"></div>
+  <!-- Forgot Password Modal -->
+  <div id="forgotModal" class="modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
+    <div style="background:rgba(30,30,30,0.9); color:white; padding:2rem; border-radius:1rem; width:90%; max-width:400px; border:2px solid var(--primary-color);">
+      <h3 style="margin-top:0; color:var(--primary-color); font-weight:800;">Réinitialiser le mot de passe</h3>
+      <p style="margin-bottom:1.2rem; color:#ccc; font-size:0.95rem;">
+        Entrez votre adresse e-mail.
+      </p>
+      <input type="email" id="resetEmail" placeholder="votre@email.com" style="width:100%; padding:0.8rem; border:2px solid var(--primary-color); border-radius:0.5rem; background:transparent; color:white; margin-bottom:1rem;" />
+      <div style="display:flex; gap:0.6rem;">
+        <button id="sendResetBtn" style="flex:1; background:var(--second-color); color:var(--black-color); border:none; border-radius:0.5rem; font-weight:800; padding:0.6rem;">Envoyer</button>
+        <button id="cancelResetBtn" style="flex:1; background:transparent; color:white; border:2px solid white; border-radius:0.5rem; padding:0.6rem;">Annuler</button>
+      </div>
+    </div>
+  </div>
 
-    <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+  <div class="toast" id="toast"></div>
 
-        const SUPABASE_URL = 'https://mqsebxyhynaroemoupwy.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xc2VieHloeW5hcm9lbW91cHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDM0NzgsImV4cCI6MjA3NDQ3OTQ3OH0.ieD61m0CwOt7I2EA8Dstkd5Xd3RgOMQEFs5zpvB9hTU';
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const SUPABASE_URL = 'https://mqsebxyhynaroemoupwy.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xc2VieHloeW5hcm9lbW91cHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDM0NzgsImV4cCI6MjA3NDQ3OTQ3OH0.ieD61m0CwOt7I2EA8Dstkd5Xd3RgOMQEFs5zpvB9hTU';
 
-        function showToast(message, type = 'info') {
-            const toast = document.getElementById("toast");
-            
-            // Set icon based on type
-            let icon = 'ℹ️';
-            if (type === 'success') icon = '✅';
-            else if (type === 'error') icon = '⚠️';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-            toast.innerHTML = `<span>${icon}</span> ${message}`;
-            toast.className = `toast ${type} show`;
+    function showToast(message, isError = false) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.className = `toast ${isError ? 'error' : ''} show`;
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
 
-            setTimeout(() => {
-                toast.classList.remove('show');
-                // Optional: remove class after animation to reset
-                setTimeout(() => toast.className = 'toast', 400);
-            }, 4000);
-        }
+    function resetTurnstile() {
+      const container = document.querySelector('.cf-turnstile');
+      if (container && typeof turnstile !== 'undefined') {
+        turnstile.reset(container);
+      }
+    }
 
-        function resetTurnstile() {
-            const container = document.querySelector('.cf-turnstile');
-            if (container && typeof turnstile !== 'undefined') {
-                turnstile.reset(container);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const loginForm = document.getElementById('loginForm');
-            if (loginForm) {
-                loginForm.addEventListener('submit', async function(event) {
-                    event.preventDefault();
-
-                    const email = document.getElementById("email").value.trim();
-                    const password = document.getElementById("password").value.trim();
-                    const turnstileToken = document.querySelector('input[name="cf-turnstile-response"]')?.value || '';
-
-                    if (email === "" || password === "") {
-                        showToast("Veuillez remplir tous les champs.", "error");
-                        return;
-                    }
-                    if (!turnstileToken) {
-                        showToast("Veuillez compléter le CAPTCHA de Cloudflare.", "error");
-                        return;
-                    }
-
-                    try {
-                        const { data, error } = await supabase.auth.signInWithPassword({
-                            email: email,
-                            password: password,
-                        });
-
-                        if (error) throw error;
-
-                        const user = data.user;
-                        if (!user) {
-                            showToast("Une erreur inattendue est survenue.", "error");
-                            resetTurnstile();
-                            return;
-                        }
-
-                        const username = user.user_metadata?.full_name || email.split("@")[0];
-                        localStorage.setItem("jsaliUser", username);
-
-                        showToast(`Connexion réussie ! Bienvenue ${username} !`, "success");
-
-                        setTimeout(() => {
-                            window.location.href = "index.html";
-                        }, 1500);
-
-                    } catch (error) {
-                        resetTurnstile();
-                        let errorMessage = "Échec de la connexion. Veuillez vérifier vos identifiants.";
-                        if (error.message.includes('Invalid login credentials') || error.message.includes('Email not confirmed')) {
-                            errorMessage = "Identifiants incorrects ou email non confirmé.";
-                        }
-                        showToast(errorMessage, "error");
-                        console.error("Supabase Auth Error:", error.message);
-                    }
-                });
-            }
+    // Google Sign-In
+    document.getElementById('googleSignIn').addEventListener('click', async () => {
+      try {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: 'https://yourdomain.com/login.html' // 👈 Update this
+          }
         });
-    </script>
+        if (error) throw error;
+      } catch (err) {
+        console.error('Google error:', err);
+        showToast("Erreur Google.", true);
+      }
+    });
+
+    // Login Form
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const turnstileToken = document.querySelector('input[name="cf-turnstile-response"]')?.value || '';
+
+      if (!email || !password) return showToast("Tous les champs sont requis.", true);
+      if (!turnstileToken) return showToast("Veuillez compléter le CAPTCHA.", true);
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+
+        const username = data.user.user_metadata?.full_name || email.split('@')[0];
+        localStorage.setItem('jsaliUser', username);
+        showToast(`Bienvenue, ${username} !`);
+
+        setTimeout(() => window.location.href = 'index.html', 1500);
+      } catch (err) {
+        resetTurnstile();
+        let msg = "Identifiants incorrects.";
+        if (err.message.includes('Email not confirmed')) msg = "Veuillez confirmer votre email.";
+        showToast(msg, true);
+      }
+    });
+
+    // Forgot Password Modal
+    document.getElementById('forgotLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('forgotModal').style.display = 'flex';
+    });
+
+    document.getElementById('cancelResetBtn').addEventListener('click', () => {
+      document.getElementById('forgotModal').style.display = 'none';
+      document.getElementById('resetEmail').value = '';
+    });
+
+    document.getElementById('sendResetBtn').addEventListener('click', async () => {
+      const email = document.getElementById('resetEmail').value.trim();
+      if (!email) return showToast("Entrez une adresse email.", true);
+
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: 'https://yourdomain.com/reset-password.html' // 👈 Must match your reset page URL
+        });
+        if (error) throw error;
+
+        showToast("Lien de réinitialisation envoyé !");
+        document.getElementById('forgotModal').style.display = 'none';
+        document.getElementById('resetEmail').value = '';
+      } catch (err) {
+        console.error(err);
+        showToast("Impossible d’envoyer le lien.", true);
+      }
+    });
+  </script>
 </body>
 </html>
