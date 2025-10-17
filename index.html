@@ -670,169 +670,182 @@
     </div>
 
     <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-        const supabaseUrl = 'https://mqsebxyhynaroemoupwy.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xc2VieHloeW5hcm9lbW91cHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDM0NzgsImV4cCI6MjA3NDQ3OTQ3OH0.ieD61m0CwOt7I2EA8Dstkd5Xd3RgOMQEFs5zpvB9hTU';
-        const supabase = createClient(supabaseUrl, supabaseKey);
+    const supabaseUrl = 'https://mqsebxyhynaroemoupwy.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xc2VieHloeW5hcm9lbW91cHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDM0NzgsImV4cCI6MjA3NDQ3OTQ3OH0.ieD61m0CwOt7I2EA8Dstkd5Xd3RgOMQEFs5zpvB9hTU';
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
-        const BUCKET_NAME = 'profile-pictures';
-        const PLACEHOLDER_PIC = 'placeholder-profile-pic.png';
+    const BUCKET_NAME = 'profile-pictures';
+    const PLACEHOLDER_PIC = 'placeholder-profile-pic.png';
 
-        document.addEventListener("DOMContentLoaded", async () => {
-            // Loader
-            const loaderWrapper = document.getElementById('loaderWrapper');
-            const mainContent = document.getElementById('mainContent');
-            setTimeout(() => {
-                loaderWrapper?.classList.add('hidden');
-                setTimeout(() => mainContent?.classList.remove('hidden'), 300);
-            }, 2000);
+    document.addEventListener("DOMContentLoaded", async () => {
+        // Loader
+        const loaderWrapper = document.getElementById('loaderWrapper');
+        const mainContent = document.getElementById('mainContent');
+        setTimeout(() => {
+            loaderWrapper?.classList.add('hidden');
+            setTimeout(() => mainContent?.classList.remove('hidden'), 300);
+        }, 2000);
 
-            // Mobile Menu
-            const hamburger = document.getElementById('hamburger');
-            const navLinks = document.getElementById('nav-links');
-            hamburger.addEventListener('click', () => {
-                const isActive = navLinks.classList.toggle('active');
-                const spans = hamburger.querySelectorAll('span');
-                if (isActive) {
-                    spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
-                    spans[1].style.opacity = '0';
-                    spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
-                } else {
-                    spans.forEach(s => s.style.cssText = '');
-                }
-            });
-
-            // Close menu on link click
-            document.querySelectorAll('#nav-links a').forEach(a => {
-                a.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    hamburger.querySelectorAll('span').forEach(s => s.style.cssText = '');
-                });
-            });
-
-            // Feature Animation
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('visible');
-                });
-            }, { threshold: 0.15 });
-            document.querySelectorAll('.feature').forEach(el => observer.observe(el));
-
-            // Parallax Effect with Rotation
-            const parallaxLayers = document.querySelectorAll('.parallax-layer img');
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                parallaxLayers.forEach((layer, index) => {
-                    const speed = 0.2 * (index + 1);
-                    const rotation = scrollY * 0.05 * (index + 1);
-                    layer.style.transform = `translateY(${scrollY * speed}px) rotate(${rotation}deg)`;
-                });
-            });
-
-            // Initialize Vanilla Tilt for 3D effect
-            VanillaTilt.init(document.querySelectorAll(".logos img, .feature"), {
-                max: 10,
-                speed: 400,
-                perspective: 1000,
-                glare: true,
-                "max-glare": 0.3
-            });
-
-            // Auth UI
-            const welcomeNavMsg = document.getElementById('welcome-nav-msg');
-            const loginBtn = document.getElementById('login-btn');
-            const registerBtn = document.getElementById('register-btn');
-            const logoutBtn = document.getElementById('logout-btn');
-            const profileSection = document.getElementById('profile-section');
-            const profilePic = document.getElementById('profile-pic');
-            const profilePicInput = document.getElementById('profile-pic-input');
-
-            async function loadProfilePicture(userId) {
-                if (!userId || !profilePic) return;
-                const cached = localStorage.getItem(`jsali_avatar_${userId}`);
-                if (cached) return profilePic.src = cached;
-
-                const exts = ['jpg','jpeg','png','webp'];
-                for (const ext of exts) {
-                    const path = `${userId}/avatar.${ext}`;
-                    const { data } = supabase.storage.from(BUCKET_NAME).getPublicUrl(path);
-                    if (!data?.publicUrl) continue;
-                    try {
-                        const res = await fetch(data.publicUrl, {method:'HEAD'});
-                        if (res.ok) {
-                            profilePic.src = data.publicUrl;
-                            localStorage.setItem(`jsali_avatar_${userId}`, data.publicUrl);
-                            return;
-                        }
-                    } catch {}
-                }
-                profilePic.src = PLACEHOLDER_PIC;
-            }
-
-            function showLoggedIn(user) {
-                const name = user.user_metadata?.full_name || user.email.split('@')[0];
-                if (welcomeNavMsg) welcomeNavMsg.textContent = ` ${name} `;
-                if (profileSection) profileSection.style.display = 'flex';
-                if (welcomeNavMsg) welcomeNavMsg.style.display = 'block';
-                if (loginBtn) loginBtn.style.display = 'none';
-                if (registerBtn) registerBtn.style.display = 'none';
-                if (logoutBtn) logoutBtn.style.display = 'inline-block';
-                if (profilePic) {
-                    profilePic.onclick = () => profilePicInput?.click();
-                    profilePicInput.onchange = async (e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                            const filePath = `${user.id}/avatar.jpg`;
-                            const { error } = await supabase.storage.from(BUCKET_NAME).upload(filePath, file, { upsert: true });
-                            if (!error) {
-                                const { data } = supabase.storage.from(BUCKET_NAME).getPublicUrl(filePath);
-                                if (data?.publicUrl) {
-                                    profilePic.src = data.publicUrl + '?t=' + Date.now();
-                                    localStorage.setItem(`jsali_avatar_${user.id}`, data.publicUrl);
-                                }
-                            }
-                            e.target.value = '';
-                        }
-                    };
-                }
-                loadProfilePicture(user.id);
-            }
-
-            function showLoggedOut() {
-                if (welcomeNavMsg) welcomeNavMsg.textContent = '';
-                if (profileSection) profileSection.style.display = 'none';
-                if (welcomeNavMsg) welcomeNavMsg.style.display = 'none';
-                if (loginBtn) loginBtn.style.display = 'inline-block';
-                if (registerBtn) registerBtn.style.display = 'inline-block';
-                if (logoutBtn) logoutBtn.style.display = 'none';
-                if (profilePic) profilePic.src = PLACEHOLDER_PIC;
-            }
-
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user?.email_confirmed_at) {
-                showLoggedIn(session.user);
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+        hamburger.addEventListener('click', () => {
+            const isActive = navLinks.classList.toggle('active');
+            const spans = hamburger.querySelectorAll('span');
+            if (isActive) {
+                spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
             } else {
-                showLoggedOut();
+                spans.forEach(s => s.style.cssText = '');
             }
+        });
 
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', async () => {
-                    await supabase.auth.signOut();
+        // Close menu on link click
+        document.querySelectorAll('#nav-links a').forEach(a => {
+            a.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.querySelectorAll('span').forEach(s => s.style.cssText = '');
+            });
+        });
+
+        // Feature Animation
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.feature').forEach(el => observer.observe(el));
+
+        // Parallax Effect with Rotation
+        const parallaxLayers = document.querySelectorAll('.parallax-layer img');
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            parallaxLayers.forEach((layer, index) => {
+                const speed = 0.2 * (index + 1);
+                const rotation = scrollY * 0.05 * (index + 1);
+                layer.style.transform = `translateY(${scrollY * speed}px) rotate(${rotation}deg)`;
+            });
+        });
+
+        // Initialize Vanilla Tilt for 3D effect
+        VanillaTilt.init(document.querySelectorAll(".logos img, .feature"), {
+            max: 10,
+            speed: 400,
+            perspective: 1000,
+            glare: true,
+            "max-glare": 0.3
+        });
+
+        // Auth UI
+        const welcomeNavMsg = document.getElementById('welcome-nav-msg');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const profileSection = document.getElementById('profile-section');
+        const profilePic = document.getElementById('profile-pic');
+        const profilePicInput = document.getElementById('profile-pic-input');
+
+        async function loadProfilePicture(userId) {
+            if (!userId || !profilePic) return;
+            const cached = localStorage.getItem(`jsali_avatar_${userId}`);
+            if (cached) return profilePic.src = cached;
+
+            const exts = ['jpg','jpeg','png','webp'];
+            for (const ext of exts) {
+                const path = `${userId}/avatar.${ext}`;
+                const { data } = supabase.storage.from(BUCKET_NAME).getPublicUrl(path);
+                if (!data?.publicUrl) continue;
+                try {
+                    const res = await fetch(data.publicUrl, {method:'HEAD'});
+                    if (res.ok) {
+                        profilePic.src = data.publicUrl;
+                        localStorage.setItem(`jsali_avatar_${userId}`, data.publicUrl);
+                        return;
+                    }
+                } catch {}
+            }
+            profilePic.src = PLACEHOLDER_PIC;
+        }
+
+        function showLoggedIn(user) {
+            const name = user.user_metadata?.full_name || user.email.split('@')[0];
+            if (welcomeNavMsg) welcomeNavMsg.textContent = ` ${name} `;
+            if (profileSection) profileSection.style.display = 'flex';
+            if (welcomeNavMsg) welcomeNavMsg.style.display = 'block';
+            if (loginBtn) loginBtn.style.display = 'none';
+            if (registerBtn) registerBtn.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'inline-block';
+            if (profilePic && profilePicInput) {
+                profilePic.onclick = () => profilePicInput.click();
+                profilePicInput.onchange = async (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const filePath = `${user.id}/avatar.jpg`;
+                        const { error } = await supabase.storage.from(BUCKET_NAME).upload(filePath, file, { upsert: true });
+                        if (!error) {
+                            const { data } = supabase.storage.from(BUCKET_NAME).getPublicUrl(filePath);
+                            if (data?.publicUrl) {
+                                profilePic.src = data.publicUrl + '?t=' + Date.now();
+                                localStorage.setItem(`jsali_avatar_${user.id}`, data.publicUrl);
+                            }
+                        }
+                        e.target.value = '';
+                    }
+                };
+            } else {
+                console.warn('profilePic or profilePicInput not found in DOM');
+            }
+            loadProfilePicture(user.id);
+        }
+
+        function showLoggedOut() {
+            if (welcomeNavMsg) welcomeNavMsg.textContent = '';
+            if (profileSection) profileSection.style.display = 'none';
+            if (welcomeNavMsg) welcomeNavMsg.style.display = 'none';
+            if (loginBtn) loginBtn.style.display = 'inline-block';
+            if (registerBtn) registerBtn.style.display = 'inline-block';
+            if (logoutBtn) logoutBtn.style.display = 'none';
+            if (profilePic) profilePic.src = PLACEHOLDER_PIC;
+        }
+
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user?.email_confirmed_at) {
+            console.log('User is logged in:', session.user);
+            showLoggedIn(session.user);
+        } else {
+            console.log('No active session');
+            showLoggedOut();
+        }
+
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+                console.log('Logout button clicked');
+                try {
+                    const { error } = await supabase.auth.signOut();
+                    if (error) throw error;
+                    console.log('Sign-out successful');
                     showLoggedOut();
                     if (session?.user) localStorage.removeItem(`jsali_avatar_${session.user.id}`);
                     window.location.href = "index.html";
-                });
-            }
-
-            supabase.auth.onAuthStateChange((event, session) => {
-                if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
-                    showLoggedIn(session.user);
-                } else if (event === 'SIGNED_OUT') {
-                    showLoggedOut();
+                } catch (error) {
+                    console.error('Logout failed:', error.message);
+                    alert('Échec de la déconnexion. Veuillez réessayer.');
                 }
             });
+        }
+
+        supabase.auth.onAuthStateChange((event, session) => {
+            console.log('Auth state changed:', event, session);
+            if (event === 'SIGNED_IN' && session?.user?.email_confirmed_at) {
+                showLoggedIn(session.user);
+            } else if (event === 'SIGNED_OUT') {
+                showLoggedOut();
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
