@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <meta property="og:title" content="jsali_lvrgt">
+    <meta property="og:description" content="Gouvernance, Développement Durable et Résilience Ecologique.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jsali-lvrgt.github.io">
+    <meta property="og:image" content="https://jsali-lvrgt.github.io/jsali_lvrgt.png">
+    <meta property="og:site_name" content="jsali_lvrgt">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>jsali_lvrgt</title>
@@ -9,16 +15,20 @@
     <link rel="icon" type="image/png" sizes="32x32" href="JSALI.png">
     <link rel="icon" type="image/png" sizes="16x16" href="JSALI.png">
     <link rel="apple-touch-icon" href="jsali_lvrgt.png">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     <style>
         :root {
-            --main-bg: #0a0a0a;
-            --highlight: #919191;
-            --accent: #919191;
-            --primary-text: #fff;
-            --secondary-text: #cbd5e1;
-            --blur: rgba(255, 255, 255, 0.05);
+            --main-bg: #e2e2e2;
+            --highlight: #616161;
+            --accent: #c9d6ff;
+            --primary-text: #333;
+            --secondary-text: #888;
+            --blur: rgba(0, 0, 0, 0.1);
             --nav-height: 70px;
+            --btn-bg: #888;
+            --btn-hover: #777;
         }
 
         * {
@@ -26,11 +36,13 @@
             padding: 0;
             box-sizing: border-box;
             scroll-behavior: smooth;
+            font-family: "Poppins", sans-serif;
+            text-decoration: none;
+            list-style: none;
         }
 
         body {
-            font-family: "Space Grotesk", sans-serif;
-            background: var(--main-bg);
+            background: linear-gradient(90deg, var(--main-bg), var(--accent));
             color: var(--primary-text);
             min-height: 100vh;
             display: flex;
@@ -38,14 +50,14 @@
             overflow-x: hidden;
         }
 
-        /* --- LOADER (identique aux autres pages) --- */
+        /* --- LOADER --- */
         .loader-wrapper {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--main-bg);
+            background: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -69,7 +81,7 @@
             color: var(--highlight);
             margin-bottom: 2rem;
         }
-        
+
         .loader-footer-text {
             text-align: center;
             font-size: 0.85rem;
@@ -86,7 +98,7 @@
         }
 
         .loader-footer-text a:hover {
-            color: #fff;
+            color: var(--primary-text);
             text-decoration: underline;
         }
 
@@ -119,9 +131,9 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(10, 10, 10, 0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             padding: 0 2rem;
             z-index: 1000;
             display: flex;
@@ -134,6 +146,7 @@
             font-size: 1.3rem;
             color: var(--highlight);
             font-weight: 800;
+            animation: fadeIn 1s ease-out;
         }
 
         .hamburger {
@@ -160,31 +173,33 @@
         }
 
         .nav-links a {
-            color: var(--secondary-text);
+            color: var(--primary-text);
             text-decoration: none;
             font-weight: 600;
-            transition: color 0.3s;
+            transition: color 0.3s, transform 0.3s;
             font-size: 1rem;
+            animation: fadeIn 1s ease-out;
         }
 
         .nav-links a:hover {
             color: var(--highlight);
+            transform: scale(1.1);
         }
 
         .btn {
             padding: 0.5rem 1.2rem;
-            background: var(--highlight);
-            color: var(--main-bg);
+            background: var(--btn-bg);
+            color: #fff;
             border: none;
             border-radius: 8px;
-            font-weight: bold;
+            font-weight: 600;
             transition: background 0.3s, transform 0.2s;
-            text-decoration: none;
             cursor: pointer;
+            animation: fadeIn 1s ease-out;
         }
 
         .btn:hover {
-            background: #a1a1a1;
+            background: var(--btn-hover);
             transform: translateY(-2px);
         }
 
@@ -192,14 +207,15 @@
             display: flex;
             align-items: center;
             gap: 0.8rem;
+            animation: fadeIn 1s ease-out;
         }
-        
+
         #profile-pic-container {
             width: 40px;
             height: 40px;
             cursor: pointer;
         }
-        
+
         #profile-pic {
             width: 100%;
             height: 100%;
@@ -208,11 +224,11 @@
             object-fit: cover;
             transition: transform 0.3s ease;
         }
-        
+
         #profile-pic:hover {
             transform: scale(1.1);
         }
-        
+
         #profile-pic-input {
             display: none;
         }
@@ -235,22 +251,24 @@
         header {
             padding: 6rem 2rem 2rem;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         header h1 {
             font-size: 3rem;
             font-weight: 800;
-            background: linear-gradient(to right, var(--highlight), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--highlight);
             margin-bottom: 0.5rem;
             line-height: 1.2;
+            animation: fadeInUp 1s ease-out;
         }
 
         header h2 {
             font-size: 1.8rem;
             color: var(--secondary-text);
             margin-bottom: 1rem;
+            animation: fadeInUp 1.2s ease-out;
         }
 
         header p {
@@ -258,6 +276,17 @@
             color: var(--secondary-text);
             max-width: 700px;
             margin: 0 auto;
+            animation: fadeInUp 1.4s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         .logos {
@@ -267,6 +296,8 @@
             gap: 2.5rem;
             padding: 2.5rem;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
 
         .logos img {
@@ -276,6 +307,7 @@
             border: 2px solid var(--highlight);
             padding: 5px;
             transition: transform 0.4s ease;
+            will-change: transform;
         }
 
         #fstgat-logo {
@@ -285,8 +317,8 @@
             border-radius: 20%;
         }
 
-        .logos img:hover {
-            transform: scale(1.1);
+        .logos img[data-tilt] {
+            transform-style: preserve-3d;
         }
 
         .features {
@@ -296,28 +328,43 @@
             padding: 3rem 2rem;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
         .feature {
-            background: var(--blur);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #fff;
+            border: 1px solid var(--blur);
             padding: 2rem;
             border-radius: 1.5rem;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             opacity: 0;
             transform: translateY(30px) scale(0.98);
             transition: all 0.6s ease;
             text-align: center;
+            transform-style: preserve-3d;
         }
 
         .feature.visible {
             opacity: 1;
             transform: translateY(0) scale(1);
+            animation: staggerIn 0.5s ease-out forwards;
+        }
+
+        .feature:nth-child(1) { animation-delay: 0.1s; }
+        .feature:nth-child(2) { animation-delay: 0.2s; }
+        .feature:nth-child(3) { animation-delay: 0.3s; }
+        .feature:nth-child(4) { animation-delay: 0.4s; }
+        .feature:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes staggerIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .feature:hover {
             transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 10px 25px rgba(145, 145, 145, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
         .feature h3 {
@@ -331,17 +378,56 @@
             text-align: center;
             padding: 3rem 1rem 2rem;
             font-size: 0.9rem;
-            color: #64748b;
+            color: var(--secondary-text);
+            position: relative;
+            z-index: 1;
         }
 
         footer a {
-            color: var(--secondary-text);
+            color: var(--primary-text);
             text-decoration: none;
             transition: color 0.3s;
         }
 
         footer a:hover {
             color: var(--highlight);
+        }
+
+        /* --- PARALLAX EFFECT --- */
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .parallax-layer img {
+            position: absolute;
+            object-fit: cover;
+            opacity: 0.3;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
+        }
+
+        .parallax-layer-1 img {
+            width: 200px;
+            top: 10%;
+            left: 10%;
+        }
+
+        .parallax-layer-2 img {
+            width: 150px;
+            top: 50%;
+            right: 15%;
+        }
+
+        .parallax-layer-3 img {
+            width: 180px;
+            bottom: 20%;
+            left: 20%;
         }
 
         /* --- MOBILE MENU & RESPONSIVE --- */
@@ -355,7 +441,7 @@
                 top: var(--nav-height);
                 left: 0;
                 right: 0;
-                background: rgba(10, 10, 10, 0.97);
+                background: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(10px);
                 flex-direction: column;
                 align-items: flex-start;
@@ -366,7 +452,7 @@
                 visibility: hidden;
                 transition: all 0.4s ease;
                 z-index: 999;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
             }
 
             .nav-links.active {
@@ -379,7 +465,7 @@
                 width: 100%;
                 padding: 0.7rem 0;
                 font-size: 1.1rem;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
             }
 
             .nav-links a:last-child, .nav-links .btn:last-child {
@@ -389,7 +475,7 @@
             .profile-section {
                 width: 100%;
                 padding-top: 1rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.05);
+                border-top: 1px solid rgba(0, 0, 0, 0.05);
             }
 
             #welcome-nav-msg {
@@ -449,11 +535,29 @@
             footer {
                 padding: 2rem 1rem;
             }
+
+            .parallax-layer-1 img {
+                width: 100px;
+                top: 15%;
+                left: 5%;
+            }
+
+            .parallax-layer-2 img {
+                width: 80px;
+                top: 60%;
+                right: 5%;
+            }
+
+            .parallax-layer-3 img {
+                width: 90px;
+                bottom: 10%;
+                left: 10%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- LOADER IDENTIQUE AUX AUTRES PAGES -->
+    <!-- LOADER -->
     <div class="loader-wrapper" id="loaderWrapper">
         <div class="loader-text">Chargement...</div>
         <div class="loader">
@@ -468,6 +572,8 @@
         </p>
     </div>
 
+    <!-- PARALLAX LAYERS -->
+
     <div id="mainContent" class="main-content hidden">
         <nav>
             <h1><strong>jsali_lvrgt</strong></h1>
@@ -480,7 +586,6 @@
                 <a href="axe thematique">Axes Thématiques</a>
                 <a href="/error-catcher/404page.html">Sponsors</a>
                 <a href="/inscriptions/">Inscription à la participation</a>
-                
                 <div class="profile-section" style="display:none" id="profile-section">
                     <div id="profile-pic-container">
                         <input type="file" id="profile-pic-input" accept="image/*">
@@ -488,9 +593,8 @@
                     </div>
                     <span id="welcome-nav-msg"></span>
                 </div>
-                
-                <a href="register" class="btn" id="register-btn">S'inscrire</a>
-                <a href="login" class="btn" id="login-btn">Se connecter</a>
+                <a href="auth" class="btn" id="register-btn">Authentification</a>
+             
                 <button type="button" class="btn" id="logout-btn" style="display:none">Déconnexion</button>
             </div>
         </nav>
@@ -503,25 +607,25 @@
             </header>
 
             <section class="logos">
-                <img src="jsail%20usthb.jpeg" alt="USTHB" />
-                <img src="fstgat%20jsail.png" alt="FSTGAT" id="fstgat-logo" />
-                <img src="jsali_lvrgt.png" alt="JSALI" />
+                <img src="jsail%20usthb.jpeg" alt="USTHB" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000" />
+                <img src="fstgat%20jsail.png" alt="FSTGAT" id="fstgat-logo" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000" />
+                <img src="jsali_lvrgt.png" alt="JSALI" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-perspective="1000" />
             </section>
 
             <section class="features" id="axes">
-                <a href="axe-thematique" class="feature">
+                <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
                     <h3>Axe 1:<br>Infrastructures linéaires & développement rural</h3>
                 </a>
-                <a href="axe-thematique" class="feature">
+                <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
                     <h3>Axe 2:<br>Technologies & innovations pour un aménagement intelligent</h3>
                 </a>
-                <a href="axe-thematique" class="feature">
+                <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
                     <h3>Axe 3:<br>Gouvernance & participation locale</h3>
                 </a>
-                <a href="axe-thematique" class="feature">
+                <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
                     <h3>Axe 4:<br>Développement durable & biodiversité</h3>
                 </a>
-                <a href="axe-thematique" class="feature">
+                <a href="axe thematique" class="feature" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-perspective="1000">
                     <h3>Axe 5:<br>Résilience & adaptation climatique</h3>
                 </a>
             </section>
@@ -536,7 +640,6 @@
     <script type="module">
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-        // 🔑 Supabase config (espaces supprimés)
         const supabaseUrl = 'https://mqsebxyhynaroemoupwy.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xc2VieHloeW5hcm9lbW91cHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDM0NzgsImV4cCI6MjA3NDQ3OTQ3OH0.ieD61m0CwOt7I2EA8Dstkd5Xd3RgOMQEFs5zpvB9hTU';
         const supabase = createClient(supabaseUrl, supabaseKey);
@@ -545,7 +648,7 @@
         const PLACEHOLDER_PIC = 'placeholder-profile-pic.png';
 
         document.addEventListener("DOMContentLoaded", async () => {
-            // === LOADER ===
+            // Loader
             const loaderWrapper = document.getElementById('loaderWrapper');
             const mainContent = document.getElementById('mainContent');
             setTimeout(() => {
@@ -553,7 +656,7 @@
                 setTimeout(() => mainContent?.classList.remove('hidden'), 300);
             }, 2000);
 
-            // === MOBILE MENU ===
+            // Mobile Menu
             const hamburger = document.getElementById('hamburger');
             const navLinks = document.getElementById('nav-links');
             hamburger.addEventListener('click', () => {
@@ -576,7 +679,7 @@
                 });
             });
 
-            // === FEATURE ANIMATION ===
+            // Feature Animation
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -584,7 +687,27 @@
             }, { threshold: 0.15 });
             document.querySelectorAll('.feature').forEach(el => observer.observe(el));
 
-            // === AUTH UI ===
+            // Parallax Effect with Rotation
+            const parallaxLayers = document.querySelectorAll('.parallax-layer img');
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                parallaxLayers.forEach((layer, index) => {
+                    const speed = 0.2 * (index + 1);
+                    const rotation = scrollY * 0.05 * (index + 1);
+                    layer.style.transform = `translateY(${scrollY * speed}px) rotate(${rotation}deg)`;
+                });
+            });
+
+            // Initialize Vanilla Tilt for 3D effect
+            VanillaTilt.init(document.querySelectorAll(".logos img, .feature"), {
+                max: 10,
+                speed: 400,
+                prospective: 1000,
+                glare: true,
+                "max-glare": 0.3
+            });
+
+            // Auth UI
             const welcomeNavMsg = document.getElementById('welcome-nav-msg');
             const loginBtn = document.getElementById('login-btn');
             const registerBtn = document.getElementById('register-btn');
