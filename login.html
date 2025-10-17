@@ -380,7 +380,7 @@
           <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" class="yellow"></path>
           <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" class="red"></path>
         </svg>
-        <span class="text">Continue with Google</span>
+        <span class="text">Continuer avec Google</span>
       </button>
 
       <div class="divider"><span>ou</span></div>
@@ -403,9 +403,6 @@
             <input type="checkbox" id="remember" style="margin-right: 6px; accent-color: var(--primary-color);" />
             <label for="remember">Se souvenir de moi</label>
           </div>
-          <div class="forgot">
-            <a href="#" id="forgotLink">Mot de passe oublié ?</a>
-          </div>
         </div>
 
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAB5t-g-mfliUjsH3"></div>
@@ -415,26 +412,12 @@
         </div>
 
         <div class="register">
-          <span>Pas de compte ? <a href="register.html">Créer un compte</a></span>
+          <span>Pas de compte ? <a href="register">Créer un compte</a></span>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Forgot Password Modal -->
-  <div id="forgotModal" class="modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:2000; justify-content:center; align-items:center;">
-    <div style="background:rgba(30,30,30,0.9); color:white; padding:2rem; border-radius:1rem; width:90%; max-width:400px; border:2px solid var(--primary-color);">
-      <h3 style="margin-top:0; color:var(--primary-color); font-weight:800;">Réinitialiser le mot de passe</h3>
-      <p style="margin-bottom:1.2rem; color:#ccc; font-size:0.95rem;">
-        Entrez votre adresse e-mail.
-      </p>
-      <input type="email" id="resetEmail" placeholder="votre@email.com" style="width:100%; padding:0.8rem; border:2px solid var(--primary-color); border-radius:0.5rem; background:transparent; color:white; margin-bottom:1rem;" />
-      <div style="display:flex; gap:0.6rem;">
-        <button id="sendResetBtn" style="flex:1; background:var(--second-color); color:var(--black-color); border:none; border-radius:0.5rem; font-weight:800; padding:0.6rem;">Envoyer</button>
-        <button id="cancelResetBtn" style="flex:1; background:transparent; color:white; border:2px solid white; border-radius:0.5rem; padding:0.6rem;">Annuler</button>
-      </div>
-    </div>
-  </div>
 
   <div class="toast" id="toast"></div>
 
@@ -466,7 +449,7 @@
         const { error } = await supabase.auth.signInWithOAuth({
           provider: 'google',
           options: {
-            redirectTo: 'https://yourdomain.com/login.html' // 👈 Update this
+            redirectTo: 'https://jsali-lvrgt.github.io/'// 👈 Update this
           }
         });
         if (error) throw error;
